@@ -1,0 +1,4567 @@
+swagger: '2.0'
+#--api-package api --artifact-id cmn --group-id com.fitnessnow --artifact-version 0.1  --invoker-package cmn   -l spring -i api.swagger.yaml
+
+info:
+  version: v1
+  title: The CMN Api 
+  description: >-
+    
+    ## Overiew
+    
+    Welcome to the _CoachMeNow (*CMN*) API_ Documentation.
+
+
+    This document expose self-describing data types (User, Media, Address, etc.) and
+    associated "CRUD resources" useful to access these data.
+    It also has dedicated sections for specific services.
+
+
+    The whole application is on the concept of **an _Athlete_ being coached by a _Coach_ for excellent Results**.
+
+    ## A typical scenario is:
+     * 0 -   new user admin signed up as *Moderator*
+     * 1 -   new user athlete1 signed up as *Athlete*
+     * 2 -   new user coach1 signed up as *Coach*
+     * 3 -   coach1 create a *MealPlan* and *TrainingPlan* and propose *Fees*
+     * 4 -   athlete1 make a *CoachSearchRequest* for a coach
+     * 5 -   coach1 answer with a *CoachSearchResponse*, proposing his *TrainingPlan*
+     * 6 -   athlete1 accepted and a *Deal* is made
+     * 7 -   Friday night athlete1 did at an *Address*, a *Workout* composed of many *ExerciceSessions*
+     * 8 -   coach1 assisted athlete1 during this workout and gives directions in *PrivateMessages*
+     * 9 -   athlete1 gives *Feedbacks* to coach1 on his coaching
+     * 10 -  new user athlete2 signed up as *Athlete*
+     * 11 -  new user coach2 signed up as *Coach*
+     * 12 -  athlete2 and coach2 did same steps 1 to 9 -  Eventually coach2 is coaching athlete2
+     * 13 -  Sunday night athlete1 created a *GroupWorkout* and joined athlete2
+     * 14 -  athlete2 received a *Notification* and joined the GroupWorkout
+     * 15 -  During workout, athlete1 gives *Motivos* to encourage athlete2 and made some *Comments*
+     * 16 -  At the Deal payment term, athlete1 issued a *DealPayment* to honor the deal 
+     * 17 -  admin gives a *Badge* to coach2 for good coaching and excellent *Feedbacks*
+     * 18 -  athlete1 decide to *Follow* athlete2 and coach2
+     * 18 -  When athlete1 open the app next monday, his next workouts/meals are showed
+     * 19 -  athlete1 also see in the app, *FeedItems*, kind of news of those he follows
+     * 20 -  athlete1 make a picture (a *Media*) of his current shape and attach it the "me2017" *Album*
+     * 21 -  Tuesday evening, athlete2 is making workout in _DirectVideo_
+   
+    ## Services
+      * ### Authentication Services.
+       Doc à remplir
+      * ### Location Services.
+       Doc à remplir  
+      * ### Workout Services.
+       Doc à remplir    
+      * ### Media Services.
+       Doc à remplir      
+      * ### Payment Services.
+       Doc à remplir    
+      * ### Analytics Services.
+       Doc à remplir   
+      * ### Videos Services.
+       Doc à remplir    
+      * ### Events Services.
+      Doc à remplir   
+      * ### Message Services.
+     Doc à remplir
+  license:
+    name: MIT
+    url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
+#host: localhost:8080
+basePath: /
+securityDefinitions:
+  auth:
+    type: basic
+    x-testValue: []
+schemes:
+- http
+- https
+produces:
+- application/json
+paths:
+  /users/{id}:
+    get:
+      tags:
+      - users
+      operationId: UsersById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - users
+      operationId: UsersById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - users
+      operationId: UsersById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /users:
+    get:
+      tags:
+      - users
+      operationId: Users
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      security:
+      - auth: []
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /users
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Users1
+        x-testDescription: Testcase for testing endpoint Users
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - users
+      operationId: Users1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /exercices/{id}:
+    get:
+      tags:
+      - exercices
+      operationId: ExercicesById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Exercice'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - exercices
+      operationId: ExercicesById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Exercice'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - exercices
+      operationId: ExercicesById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /exercices:
+    get:
+      tags:
+      - exercices
+      operationId: Exercices
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Exercice'
+      security:
+      - auth: []
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /exercices
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Exercices1
+        x-testDescription: Testcase for testing endpoint Exercices
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - exercices
+      operationId: Exercices1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Exercice'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /foods/{id}:
+    get:
+      tags:
+      - foods
+      operationId: FoodsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Food'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - foods
+      operationId: FoodsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Food'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - foods
+      operationId: FoodsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /foods:
+    get:
+      tags:
+      - foods
+      operationId: Foods
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Food'
+      security:
+      - auth: []
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /foods
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Foods1
+        x-testDescription: Testcase for testing endpoint Foods
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - foods
+      operationId: Foods1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Food'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /medias/{id}:
+    get:
+      tags:
+      - medias
+      operationId: MediasById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Media'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - medias
+      operationId: MediasById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Media'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - medias
+      operationId: MediasById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /medias:
+    get:
+      tags:
+      - medias
+      operationId: Medias
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: adminUserRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Media'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - medias
+      operationId: Medias1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Media'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /addresses/{id}:
+    get:
+      tags:
+      - addresses
+      operationId: AddressesById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Address'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - addresses
+      operationId: AddressesById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Address'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - addresses
+      operationId: AddressesById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /addresses:
+    get:
+      tags:
+      - addresses
+      operationId: Addresses
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: adminUserRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Address'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - addresses
+      operationId: Addresses1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Address'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /meals/{id}:
+    get:
+      tags:
+      - meals
+      operationId: MealsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Meal'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - meals
+      operationId: MealsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Meal'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - meals
+      operationId: MealsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /meals/coachmealplans/{id}:
+    get:
+      tags:
+      - meals
+      operationId: MealsCoachmealplansById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/CoachMealPlan'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - meals
+      operationId: MealsCoachmealplansById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachMealPlan'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - meals
+      operationId: MealsCoachmealplansById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /meals/coachmealplans:
+    get:
+      tags:
+      - meals
+      operationId: MealsCoachmealplans
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: coachRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CoachMealPlan'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - meals
+      operationId: MealsCoachmealplans1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachMealPlan'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /meals:
+    get:
+      tags:
+      - meals
+      operationId: Meals
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: adminUserRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - meals
+      operationId: Meals1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Meal'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /trainings/{id}:
+    get:
+      tags:
+      - trainings
+      operationId: TrainingsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Training'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - trainings
+      operationId: TrainingsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Training'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - trainings
+      operationId: TrainingsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /trainings/coachtrainingplans/{id}:
+    get:
+      tags:
+      - trainings
+      operationId: TrainingsCoachtrainingplansById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/CoachTrainingPlan'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - trainings
+      operationId: TrainingsCoachtrainingplansById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachTrainingPlan'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - trainings
+      operationId: TrainingsCoachtrainingplansById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /trainings/coachtrainingplans:
+    get:
+      tags:
+      - trainings
+      operationId: TrainingsCoachtrainingplans
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: coachRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CoachTrainingPlan'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - trainings
+      operationId: TrainingsCoachtrainingplans1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachTrainingPlan'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /trainings:
+    get:
+      tags:
+      - trainings
+      operationId: Trainings
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: adminUserRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Training'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - trainings
+      operationId: Trainings1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Training'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /workouts/{id}:
+    get:
+      tags:
+      - workouts
+      operationId: WorkoutsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Workout'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - workouts
+      operationId: WorkoutsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Workout'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - workouts
+      operationId: WorkoutsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /workouts/exercicesessions/{id}:
+    get:
+      tags:
+      - workouts
+      operationId: WorkoutsExercicesessionsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/ExerciceSession'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - workouts
+      operationId: WorkoutsExercicesessionsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ExerciceSession'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - workouts
+      operationId: WorkoutsExercicesessionsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /workouts/exercicesessions:
+    get:
+      tags:
+      - workouts
+      operationId: WorkoutsExercicesessions
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ExerciceSession'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - workouts
+      operationId: WorkoutsExercicesessions1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ExerciceSession'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /workouts/groupworkouts/{id}:
+    get:
+      tags:
+      - workouts
+      operationId: WorkoutsGroupworkoutsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/GroupWorkout'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - workouts
+      operationId: WorkoutsGroupworkoutsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/GroupWorkout'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - workouts
+      operationId: WorkoutsGroupworkoutsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /workouts/groupworkouts:
+    get:
+      tags:
+      - workouts
+      operationId: WorkoutsGroupworkouts
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: adminUserRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupWorkout'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - workouts
+      operationId: WorkoutsGroupworkouts1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/GroupWorkout'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /workouts:
+    get:
+      tags:
+      - workouts
+      operationId: Workouts
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Workout'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - workouts
+      operationId: Workouts1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Workout'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /programs/{id}:
+    get:
+      tags:
+      - programs
+      operationId: ProgramsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Program'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - programs
+      operationId: ProgramsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Program'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - programs
+      operationId: ProgramsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /programs:
+    get:
+      tags:
+      - programs
+      operationId: Programs
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Program'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - programs
+      operationId: Programs1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Program'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /deals/{id}:
+    get:
+      tags:
+      - deals
+      operationId: DealsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Deal'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - deals
+      operationId: DealsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Deal'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - deals
+      operationId: DealsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /deals:
+    get:
+      tags:
+      - deals
+      operationId: Deals
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Deal'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - deals
+      operationId: Deals1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Deal'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /dealpayments/{id}:
+    get:
+      tags:
+      - dealpayments
+      operationId: DealpaymentsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/DealPayment'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - dealpayments
+      operationId: DealpaymentsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/DealPayment'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - dealpayments
+      operationId: DealpaymentsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /dealpayments:
+    get:
+      tags:
+      - dealpayments
+      operationId: Dealpayments
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DealPayment'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - dealpayments
+      operationId: Dealpayments1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/DealPayment'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /feedbacks/{id}:
+    get:
+      tags:
+      - feedbacks
+      operationId: FeedbackById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Feedback'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - feedbacks
+      operationId: FeedbacksById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Feedback'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - feedbacks
+      operationId: FeedbacksById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /feedbacks:
+    get:
+      tags:
+      - feedbacks
+      operationId: Feedbacks
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Feedback'
+      security:
+      - auth: []
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /feedbacks
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Feedbacks1
+        x-testDescription: Testcase for testing endpoint Feedbacks
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - feedbacks
+      operationId: Feedbacks1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Feedback'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /events/{id}:
+    get:
+      tags:
+      - events
+      operationId: EventsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Event'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - events
+      operationId: EventsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Event'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - events
+      operationId: EventsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /events:
+    get:
+      tags:
+      - events
+      operationId: Events
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+      security:
+      - auth: []
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /events
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Events1
+        x-testDescription: Testcase for testing endpoint Events
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - events
+      operationId: Events1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Event'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /albums/{id}:
+    get:
+      tags:
+      - albums
+      operationId: AlbumsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Album'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - albums
+      operationId: AlbumsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Album'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - albums
+      operationId: AlbumsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /albums:
+    get:
+      tags:
+      - albums
+      operationId: Albums
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Album'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - albums
+      operationId: Albums1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Album'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /notifications/{id}:
+    get:
+      tags:
+      - notifications
+      operationId: NotificationsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Notification'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - notifications
+      operationId: NotificationsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Notification'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - notifications
+      operationId: NotificationsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /notifications:
+    get:
+      tags:
+      - notifications
+      operationId: Notifications
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: userRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Notification'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - notifications
+      operationId: Notifications1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Notification'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /motivos/{id}:
+    get:
+      tags:
+      - motivos
+      operationId: MotivosById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Motivo'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - motivos
+      operationId: MotivosById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Motivo'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - motivos
+      operationId: MotivosById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /motivos:
+    get:
+      tags:
+      - motivos
+      operationId: Motivos
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: toUserRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Motivo'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - motivos
+      operationId: Motivos1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Motivo'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /comments/{id}:
+    get:
+      tags:
+      - comments
+      operationId: CommentsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - comments
+      operationId: CommentsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - comments
+      operationId: CommentsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /comments:
+    get:
+      tags:
+      - comments
+      operationId: Comments
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: userRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - comments
+      operationId: Comments1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /coachsearchrequests/{id}:
+    get:
+      tags:
+      - coachsearchrequests
+      operationId: CoachsearchrequestsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/CoachSearchRequest'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - coachsearchrequests
+      operationId: CoachsearchrequestsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachSearchRequest'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - coachsearchrequests
+      operationId: CoachsearchrequestsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /coachsearchrequests:
+    get:
+      tags:
+      - coachsearchrequests
+      operationId: Coachsearchrequests
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CoachSearchRequest'
+      security:
+      - auth: []
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /coachsearchrequests
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Coachsearchrequests1
+        x-testDescription: Testcase for testing endpoint Coachsearchrequests
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - coachsearchrequests
+      operationId: Coachsearchrequests1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachSearchRequest'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /coachsearchresponses/{id}:
+    get:
+      tags:
+      - coachsearchresponses
+      operationId: CoachsearchresponsesById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/CoachSearchResponse'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - coachsearchresponses
+      operationId: CoachsearchresponsesById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachSearchResponse'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - coachsearchresponses
+      operationId: CoachsearchresponsesById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /coachsearchresponses:
+    get:
+      tags:
+      - coachsearchresponses
+      operationId: Coachsearchresponses
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: athleteRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CoachSearchResponse'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - coachsearchresponses
+      operationId: Coachsearchresponses1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CoachSearchResponse'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /feeditems/{id}:
+    get:
+      tags:
+      - feeditems
+      operationId: FeeditemsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/FeedItem'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - feeditems
+      operationId: FeeditemsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/FeedItem'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - feeditems
+      operationId: FeeditemsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /feeditems:
+    get:
+      tags:
+      - feeditems
+      operationId: Feeditems
+      produces:
+      - application/json
+      parameters:
+      - name: privacy
+        in: query
+        required: false
+        type: string
+      - name: userRef
+        in: query
+        required: false
+        type: string
+        description: Used to filter the sensitive collection. e.g. filtering addresses on "userRef"
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FeedItem'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - feeditems
+      operationId: Feeditems1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/FeedItem'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /privatemessages/{id}:
+    get:
+      tags:
+      - privatemessages
+      operationId: PrivatemessagesById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/PrivateMessage'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - privatemessages
+      operationId: PrivatemessagesById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/PrivateMessage'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - privatemessages
+      operationId: PrivatemessagesById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /privatemessages:
+    get:
+      tags:
+      - privatemessages
+      operationId: Privatemessages1
+      produces:
+      - application/json
+      parameters:
+      - name: fromUserRef
+        in: query
+        required: true
+        type: string
+      - name: toUserRef
+        in: query
+        required: true
+        type: string
+      - name: coaching
+        in: query
+        required: true
+        type: boolean
+      - name: sent
+        in: query
+        required: true
+        type: boolean
+      - name: received
+        in: query
+        required: true
+        type: boolean
+      - name: read
+        in: query
+        required: true
+        type: boolean
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PrivateMessage'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - privatemessages
+      operationId: Privatemessages
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/PrivateMessage'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /follows/{id}:
+    get:
+      tags:
+      - follows
+      operationId: FollowsById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Follow'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      tags:
+      - follows
+      operationId: FollowsById2
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Follow'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - follows
+      operationId: FollowsById1
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /follows:
+    get:
+      tags:
+      - follows
+      operationId: Follows1
+      produces:
+      - application/json
+      parameters:
+      - name: fromUserRef
+        in: query
+        required: true
+        type: string
+      - name: toUserRef
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Follow'
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      tags:
+      - follows
+      operationId: Follows
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Follow'
+      responses:
+        200:
+          description: ''
+      security:
+      - auth: []
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+definitions:
+  Reference:
+    title: Reference
+    type: object
+    properties:
+      id:
+        type: string
+      displayName:
+        type: string
+    required:
+    - id
+    - displayName
+
+
+  PrivacyEnum:
+    title: PrivacyEnum
+    type: string
+    enum:
+    - ONLYME
+    - COACHS
+    - ATHLETES
+    - COACHATHLETE
+    - FOLLOWERS
+    - PUBLIC
+  
+  Comment:
+    title: Comment
+    type: object
+    properties:
+      userRef:
+        $ref: '#/definitions/Reference'
+      event:
+        $ref: '#/definitions/Event'
+      comment:
+        type: string
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - userRef
+    - event
+    - comment
+
+  Event:
+    title: Event
+    type: object
+    properties:
+      eventType:
+        $ref: '#/definitions/EventTypeEnum'
+      summary:
+        type: string
+      recordRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - eventType
+    - summary
+    - recordRef
+  
+  EventTypeEnum:
+    title: EventTypeEnum
+    type: string
+    enum:
+    - EXERCICE
+    - TRAINING
+    - FOOD
+    - WORKOUT
+    - MEDIA
+    - COMMENT
+    - REQUEST
+    - RESPONSE
+
+  Media:
+    title: Media
+    type: object
+    properties:
+      type:
+        $ref: '#/definitions/TypeEnum'
+      url:
+        type: string
+      mime:
+        type: string
+      date:
+        type: string
+        format: date-time
+      notes:
+        type: string
+      adminUserRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time  
+    required:
+    - type
+    - url
+    - adminUserRef
+  
+  TypeEnum:
+    title: typeEnum
+    type: string
+    enum:
+    - IMAGE
+    - VIDEO
+    - PDF
+  
+  Fee:
+    title: Fee
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+      currencyIso:
+        type: string
+      feeType:
+        $ref: '#/definitions/FeeTypeEnum'
+    required:
+    - value
+    - currencyIso
+    - feeType
+  
+  FeeTypeEnum:
+    title: feetype
+    type: string
+    enum:
+    - PACKAGE
+    - SESSION
+    - MONTH
+
+
+  WorkoutPlaceCategoryEnum:
+    title: WorkoutPlaceCategoryEnum
+    type: string
+    enum:
+    - GYM
+    - PARK
+    - HOME
+    - OTHER
+  
+  DealStatusEnum:
+    title: DealStatusEnum
+    type: string
+    enum:
+    - CREATED
+    - STARTED
+    - ONGOING
+    - STOPPED
+    - CANCELLED
+    - FINISHED
+    - CONFLICTED
+  
+  DealPaymentStatusEnum:
+    title: DealPaymentStatusEnum
+    type: string
+    enum:
+    - AUTHORIZED
+    - PAYED
+    - PARTIALLY_PAYED
+    - UNPAYED
+    - REFUNDED
+    - OTHER
+    - UNKNOWN
+  
+  CoachSearchStatusEnum:
+    title: CoachSearchStatusEnum
+    type: string
+    enum:
+    - CREATED
+    - OPEN
+    - ATTRIBUTED
+    - SEALED
+    - CLOSED
+    - CANCELLED
+  
+  CoachBadgeEnum:
+    title: CoachBadgeEnum
+    type: string
+    enum:
+    - BRONZE
+    - SILVER
+    - GOLD
+    - PLATINIUM
+  
+  GenderEnum:
+    title: GenderEnum
+    type: string
+    enum:
+    - MALE
+    - FEMALE
+    - OTHER
+  
+  ExerciceCategoryEnum:
+    title: ExerciceCategoryEnum
+    type: string
+    enum:
+    - CARDIO
+    - HIIT
+    - FREEWEIGHT
+    - MACHINE
+    - STRENGTH
+  
+  ProgramCategoryEnum:
+    title: ProgramCategoryEnum
+    type: string
+    enum:
+    - WEIGHTLOSS
+    - MUSCLE
+    - STRENGTH
+    - BULK
+    - CUT
+    - MAINTENANCE
+  
+  WeekdayEnum:
+    title: WeekdayEnum
+    type: string
+    enum:
+    - MONDAY
+    - TUESDAY
+    - WEDNESDAY
+    - THURSDAY
+    - FRIDAY
+    - SATURDAY
+    - SUNDAY
+  
+  FoodPeriodEnum:
+    title: FoodPeriodEnum
+    type: string
+    enum:
+    - BREAKFAST
+    - MORNINGSNACK
+    - LUNCH
+    - AFTERNOONSNACK
+    - DINER
+    - BEDSNACK
+  
+  FoodUnit:
+    title: FoodUnit
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+      unit:
+        $ref: '#/definitions/UnitEnum'
+    required:
+    - value
+    - unit
+  
+  UnitEnum:
+    title: unitEnum
+    type: string
+    enum:
+    - OZ
+    - GRAM
+    - LITER
+    - CUP
+  
+  AthleteLevelEnum:
+    title: AthleteLevelEnum
+    type: string
+    enum:
+    - AbsoluteBeginner
+    - Beginner
+    - OccasionalAthlete
+    - Intermediate
+    - Good
+    - Professional
+    - Master
+  
+  Address:
+    title: Address
+    type: object
+    properties:
+      name:
+        type: string
+      num:
+        type: integer
+        format: int32
+      street:
+        type: string
+      postalCode:
+        type: string
+      town:
+        type: string
+      state:
+        type: string
+      country:
+        type: string
+      latitude:
+        type: number
+        format: double
+      longitude:
+        type: number
+        format: double
+      isWorkoutPlace:
+        type: boolean
+      workoutPlaCategories:
+        type: array
+        items:
+          $ref: '#/definitions/WorkoutPlaceCategoryEnum'
+      workoutPlaceDescription:
+        type: string
+      adminUserRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - name
+    - num
+    - street
+    - postalCode
+    - town
+    - country
+    
+  User:
+    title: User
+    type: object
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      pseudo:
+        type: string
+      kind:
+        type: string
+      age:
+        type: integer
+        format: int32
+      gender:
+        $ref: '#/definitions/GenderEnum'
+      email:
+        type: string
+      phone:
+        type: string
+      password:
+        type: string
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      profilePictureUrl:
+        type: string
+      reputationScore:
+        type: number
+        format: double
+      moderation:
+        $ref: '#/definitions/Moderation'
+      athlethism:
+        $ref: '#/definitions/Athletism'
+      coaching: 
+        $ref: '#/definitions/Coaching'
+      settings:
+        type: string
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - firstname
+    - lastname
+    - kind
+    - email
+    - password
+    
+  Exercice:
+    title: Exercice
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      category:
+        $ref: '#/definitions/ExerciceCategoryEnum'
+      medias:
+        type: array
+        items:
+          $ref: '#/definitions/Media'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - name
+    - description
+  
+  ExerciceSession:
+    title: ExerciceSession
+    type: object
+    properties:
+      exercice:
+        $ref: '#/definitions/Exercice'
+      set:
+        type: integer
+        format: int32
+      repetition:
+        type: number
+        format: double
+      duration:
+        type: number
+        format: double
+      coachRef:
+        $ref: '#/definitions/Reference'
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      medias:
+        type: array
+        items:
+          $ref: '#/definitions/Media'
+      performance:
+        type: number
+        format: double
+      notes:
+        type: string
+      place:
+        $ref: '#/definitions/Address'
+      starttime:
+        type: string
+        format: date-time
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - exercice
+    
+  Training:
+    title: Training
+    type: object
+    properties:
+      exerciceRefs:
+        type: array
+        items:
+          $ref: '#/definitions/Reference'
+      description:
+        type: string
+      coachRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    
+  Food:
+    title: Food
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      proteinPercent:
+        type: integer
+        format: int32
+      fatPercent:
+        type: integer
+        format: int32
+      carbPercent:
+        type: integer
+        format: int32
+      calories:
+        type: number
+        format: double
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - name
+    - description
+    
+  MealFood:
+    title: MealFood
+    type: object
+    properties:
+      quantity:
+        $ref: '#/definitions/FoodUnit'
+      food:
+        $ref: '#/definitions/Food'
+    required:
+    - quantity
+    - food
+  
+  Meal:
+    title: Meal
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      mealFoods:
+        type: array
+        items:
+          $ref: '#/definitions/MealFood'
+      calories:
+        type: number
+        format: double
+      protein:
+        $ref: '#/definitions/FoodUnit'
+      fat:
+        $ref: '#/definitions/FoodUnit'
+      carb:
+        $ref: '#/definitions/FoodUnit'
+      adminUserRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - name
+    - description
+    - adminUserRef
+    
+  PlannedMeal:
+    title: PlannedMeal
+    type: object
+    properties:
+      period:
+        $ref: '#/definitions/FoodPeriodEnum'
+      mealRef:
+        $ref: '#/definitions/Meal'
+    required:
+    - period
+    - mealRef
+    
+  PlannedTraining:
+    title: PlannedTraining
+    type: object
+    properties:
+      time: {}
+      day:
+        $ref: '#/definitions/WeekdayEnum'
+      trainingRef:
+        $ref: '#/definitions/Reference'
+      places:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+    required:
+    - day
+    - trainingRef
+  
+  CoachMealPlan:
+    title: CoachMealPlan
+    type: object
+    properties:
+      name:
+        type: string
+      plannedMeals:
+        type: array
+        items:
+          $ref: '#/definitions/PlannedMeal'
+      coachRef:
+        $ref: '#/definitions/Reference'
+      active:
+        type: boolean
+      fee:
+        $ref: '#/definitions/Fee'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - name
+    - coachRef
+    
+  CoachTrainingPlan:
+    title: CoachTrainingPlan
+    type: object
+    properties:
+      plannedTrainings:
+        type: array
+        items:
+          $ref: '#/definitions/PlannedTraining'
+      coachRef:
+        $ref: '#/definitions/Reference'
+      fee:
+        $ref: '#/definitions/Fee'
+      maxAthlete:
+        type: number
+        format: double
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - coachRef
+  
+  Workout:
+    title: Workout
+    type: object
+    properties:
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      starttime:
+        type: string
+        format: date-time
+      endtime:
+        type: string
+        format: date-time
+      place:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      sessions:
+        type: array
+        items:
+          $ref: '#/definitions/ExerciceSession'
+      description:
+        type: string
+      groupRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - athleteRef
+    - description
+    
+  GroupWorkout:
+    title: GroupWorkout
+    type: object
+    properties:
+      description:
+        type: string
+      adminUserRef:
+        $ref: '#/definitions/Reference'
+      workouts:
+        type: array
+        items:
+          $ref: '#/definitions/Workout'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - description
+    - adminUserRef
+  
+  Athletism:
+    title: Athletism
+    type: object
+    properties:
+      level:
+        $ref: '#/definitions/AthleteLevelEnum'
+    required:
+    - level
+
+  
+  Coaching:
+    title: Coaching
+    type: object
+    properties:
+      badges:
+        $ref: '#/definitions/CoachBadgeEnum'
+      programCategories:
+        type: array
+        items:
+          $ref: '#/definitions/ProgramCategoryEnum'
+      certified:
+        type: boolean
+      verified:
+        type: boolean
+    
+  Moderation:
+    title: Moderation
+    type: object
+    properties:
+      role:
+        $ref: '#/definitions/RoleEnum'
+    required:
+    - role
+
+  
+  RoleEnum:
+    title: roleEnum
+    type: string
+    enum:
+    - Admin
+    - Moderator
+  
+  Deal:
+    title: Deal
+    type: object
+    properties:
+      description:
+        type: string
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      coachRef:
+        $ref: '#/definitions/Reference'
+      coachTrainingPlanRef:
+        $ref: '#/definitions/Reference'
+      coachMealPlanRef:
+        $ref: '#/definitions/Reference'
+      starttime:
+        type: string
+        format: date-time
+      endtime:
+        type: string
+        format: date-time
+      totalFee:
+        $ref: '#/definitions/Fee'
+      discount:
+        $ref: '#/definitions/Fee'
+      aggrementDetails:
+        type: string
+      status:
+        $ref: '#/definitions/DealStatusEnum'
+      paymentStatus:
+        $ref: '#/definitions/DealPaymentStatusEnum'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - description
+    - athleteRef
+    - coachRef
+    - starttime
+    - endtime
+    - totalFee
+    - discount
+    - aggrementDetails
+    - status
+    - paymentStatus
+  
+  DealPayment:
+    title: DealPayment
+    type: object
+    properties:
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      coachRef:
+        $ref: '#/definitions/Reference'
+      payed:
+        $ref: '#/definitions/Fee'
+      date:
+        type: string
+        format: date-time
+      transactionDetails:
+        type: string
+      dealRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - athleteRef
+    - coachRef
+    - payed
+    - date
+    - transactionDetails
+    - dealRef
+  
+  Program:
+    title: Program
+    type: object
+    properties:
+      objectives:
+        type: string
+      coachTrainingPlans:
+        type: array
+        items:
+          $ref: '#/definitions/CoachTrainingPlan'
+      mealPlans:
+        type: array
+        items:
+          $ref: '#/definitions/CoachMealPlan'
+      startdate:
+        type: string
+        format: date-time
+      enddate:
+        type: string
+        format: date-time
+      active:
+        type: boolean
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - objectives
+    - startdate
+    - active
+    - athleteRef
+
+  Feedback:
+    title: Feedback
+    type: object
+    properties:
+      dealRef:
+        $ref: '#/definitions/Reference'
+      coachRef:
+        $ref: '#/definitions/Reference'
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      notes:
+        type: string
+      rating:
+        type: number
+        format: double
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - dealRef
+    - coachRef
+    - athleteRef
+    - notes
+    - rating
+
+  Album:
+    title: Album
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      medias:
+        $ref: '#/definitions/Media'
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - name
+    - description
+    - athleteRef
+
+  CoachSearchRequest:
+    title: CoachSearchRequest
+    type: object
+    properties:
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      description:
+        type: string
+      programCategories:
+        type: array
+        items:
+          $ref: '#/definitions/ProgramCategoryEnum'
+      status:
+        $ref: '#/definitions/CoachSearchStatusEnum'
+      responses:
+        type: array
+        items:
+          $ref: '#/definitions/CoachSearchResponse'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - athleteRef
+    - description
+    - programCategories
+    - status
+    - responses
+
+  CoachSearchResponse:
+    title: CoachSearchResponse
+    type: object
+    properties:
+      coachRef:
+        $ref: '#/definitions/Reference'
+      athleteRef:
+        $ref: '#/definitions/Reference'
+      requestRef:
+        $ref: '#/definitions/Reference'
+      winner:
+        type: boolean
+      response:
+        type: string
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - coachRef
+    - athleteRef
+    - requestRef
+    - response
+
+  Notification:
+    title: Notification
+    type: object
+    properties:
+      userRef:
+        $ref: '#/definitions/Reference'
+      event:
+        $ref: '#/definitions/Event'
+      consumed:
+        type: boolean
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - userRef
+    - event
+    - consumed
+
+  Motivo:
+    title: Motivo
+    type: object
+    properties:
+      fromUserRef:
+        $ref: '#/definitions/Reference'
+      toUserRef:
+        $ref: '#/definitions/Reference'
+      event:
+        $ref: '#/definitions/Event'
+      motivo:
+        $ref: '#/definitions/MotivoEnum'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - fromUserRef
+    - toUserRef
+    - event
+    - motivo
+
+  MotivoEnum:
+    title: motivoEnum
+    type: string
+    enum:
+    - WOW
+    - GOODJOB
+    - GOHARD
+    - WARNING
+    - NOTSOGOOD
+  
+  FeedItem:
+    title: FeedItem
+    type: object
+    properties:
+      userRef:
+        $ref: '#/definitions/Reference'
+      event:
+        $ref: '#/definitions/Event'
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - userRef
+    - event
+
+  PrivateMessage:
+    title: PrivateMessage
+    type: object
+    properties:
+      fromUserRef:
+        $ref: '#/definitions/Reference'
+      toUserRef:
+        $ref: '#/definitions/Reference'
+      message:
+        type: string
+      coaching:
+        type: boolean
+      sent:
+        type: boolean
+      received:
+        type: boolean
+      read:
+        type: boolean
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - fromUserRef
+    - toUserRef
+    - message
+    - sent
+    - received
+    - read
+
+  Follow:
+    title: Follow
+    type: object
+    properties:
+      fromUserRef:
+        $ref: '#/definitions/Reference'
+      toUserRef:
+        $ref: '#/definitions/Reference'
+      tags:
+        type: array
+        items:
+          type: string
+      privacy:
+        $ref: '#/definitions/PrivacyEnum'
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+    required:
+    - fromUserRef
+    - toUserRef
+

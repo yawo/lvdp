@@ -1,0 +1,39 @@
+scalar DateTime
+
+interface Node {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+}
+
+type User implements Node {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    firstname: String
+    lastname: String
+    pseudo: String
+    age: Int
+    gender: Gender
+    email: String
+    phone: String
+    location: Address
+    addresses: [Address]
+    reputationScore: Int
+    albums: [Album]
+    profileMedia: Media 
+}
+
+type Address{
+
+}
+
+type 
+
+
+
+enum Gender {
+    MALE
+    FEMALE
+}
+
