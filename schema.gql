@@ -22,18 +22,98 @@ type User implements Node {
     reputationScore: Int
     albums: [Album]
     profileMedia: Media 
+    roles: [UserRole]
 }
 
 type Address{
-
+    latlon: [Float]
+    full: String
+    street: String
+    postalCode: String
+    town: String
+    state: String
+    country: String   
 }
 
-type 
 
+type Workout{
+    mainCoach: User
+    coachs: [User]
+    startDate: DateTime
+    endDate: DateTime
+    schedule: [Set]
+    location: Address
+}
 
+type Set {
+    exercice: Exercice
+    repetition: Int 
+    postRest: Int    
+}
+
+type Exercice implements Node{
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    createdBy: User
+    name: String
+    description: String
+    medias: [Media]
+}
+
+type Media implements Node{
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    ownerID: ID!
+    mime: String
+    name: String
+    url: [String]
+}
+ 
+type Team implements Node{
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    name: String
+    description: String
+    lead: User
+    members: [User]
+}
+
+type Relation {
+    id: ID!
+    created: DateTime!
+    updated: DateTime    
+    from: User
+    to: User
+    kind: Relationship
+}
 
 enum Gender {
     MALE
     FEMALE
 }
+
+enum UserRole{
+    ATHLETE
+    CERTIFIED_COACH
+    ADMIN      
+}
+
+enum Relationship{
+    FOLLOW
+    COACH
+}
+
+type Event{
+    id: ID!
+    created: DateTime!
+    updated: DateTime  
+    
+
+}
+
+
+
 
