@@ -1,15 +1,36 @@
-scalar DateTime
+# projectId: cj5e1b391z7270122e6r1j80c
+# version: 5
+# scalar DateTime
+
+
+
+type File implements Node {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Node implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}
 
 interface Node {
-    id: ID!
-    created: DateTime!
-    updated: DateTime
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type User implements Node {
-    id: ID!
-    created: DateTime!
-    updated: DateTime
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
     firstname: String
     lastname: String
     pseudo: String
@@ -18,14 +39,34 @@ type User implements Node {
     email: String
     phone: String
     location: Address
-    addresses: [Address]
+    addresses: [Address] @relation(name:"")
     reputationScore: Int
-    albums: [Album]
-    profileMedia: Media 
-    roles: [UserRole]
+    albums: [Album] @relation(name:"")
+    profileMedia: Media  @relation(name:"")
+    roles: [UserRole] @relation(name:"")    
+    profiles: [SocialProfile] @relation(name:"")
 }
 
-type Address{
+type Album implements Node {
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    medias: [Media] @relation(name:"")
+}
+
+type SocialProfile implements Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!
+    provider: SocialProvider @relation(name:"")
+    username: String!    
+    password: String
+}
+
+type Address implements Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!
     latlon: [Float]
     full: String
     street: String
@@ -35,59 +76,136 @@ type Address{
     country: String   
 }
 
+type MemberWorkoutSession implements Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!
+    member: User @relation(name:"")
+    messages: [WorkoutChatMessage]    @relation(name:"") 
+    sets: [SessionSet]  @relation(name:"")
+    showOnBoard: Boolean
+    approvedOnBoard: Boolean
+    approvalMessage: String
+    streamUrl: String  
+    reactions: [Reaction] @relation(name:"")
 
-type Workout{
-    mainCoach: User
-    coachs: [User]
-    startDate: DateTime
+}
+
+
+type Reaction implements Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!
+    user: User @relation(name:"")
+    reaction: ReactionType @relation(name:"")
+}
+
+type SessionSet implements  Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!    
+    exercice: Exercice @relation(name:"")
+    startDate: DateTime!
     endDate: DateTime
-    schedule: [Set]
-    location: Address
+    repetition: Int        
+    showOnBoard: Boolean!
 }
 
-type Set {
-    exercice: Exercice
-    repetition: Int 
-    postRest: Int    
+
+
+type WorkoutChatMessage implements Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!    
+    content: String
 }
 
-type Exercice implements Node{
-    id: ID!
-    created: DateTime!
-    updated: DateTime
-    createdBy: User
+
+type Workout implements Node {
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
     name: String
     description: String
-    medias: [Media]
+    mainCoach: User @relation(name:"")
+    coachs: [User] @relation(name:"")
+    startDate: DateTime
+    endDate: DateTime
+    schedule: [Set] @relation(name:"")
+    location: Address    
+    isPublic: Boolean
+    memberSessions: [MemberWorkoutSession] @relation(name:"")
+    streamUrl: String     
 }
 
+
+
+type Set implements Node{
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    createdBy: User @relation(name:"")
+    exercice: Exercice @relation(name:"")
+    directives: [SetDirective] @relation(name:"")   
+}
+
+type SetDirective implements Node {
+    createdAt: DateTime!
+    id: ID! @isUnique
+    updatedAt: DateTime!
+    difficulty: Difficulty
+    repetition: Int 
+    postRest: Int 
+}
+
+type Exercice implements Node {
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    createdBy: User @relation(name:"")
+    name: String
+    description: String
+    medias: [Media] @relation(name:"")
+    categories: [ExerciceCategory]
+    tags: [String]
+}
+
+
 type Media implements Node{
-    id: ID!
-    created: DateTime!
-    updated: DateTime
-    ownerID: ID!
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    ownerid: String
     mime: String
     name: String
     url: [String]
 }
  
 type Team implements Node{
-    id: ID!
-    created: DateTime!
-    updated: DateTime
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!
     name: String
     description: String
-    lead: User
-    members: [User]
+    lead: User @relation(name:"")
+    members: [User] @relation(name:"")
+    albums: [Album] @relation(name:"")
+    profileMedia: Media  @relation(name:"")
 }
 
-type Relation {
-    id: ID!
-    created: DateTime!
-    updated: DateTime    
-    from: User
-    to: User
-    kind: Relationship
+type Relation implements Node {
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!    
+    from: User @relation(name:"")
+    to: User @relation(name:"")
+    kind: Relationship @relation(name:"")
+}
+
+type Event implements Node {
+    id: ID! @isUnique
+    createdAt: DateTime!
+    updatedAt: DateTime!  
 }
 
 enum Gender {
@@ -95,7 +213,7 @@ enum Gender {
     FEMALE
 }
 
-enum UserRole{
+enum UserRole {
     ATHLETE
     CERTIFIED_COACH
     ADMIN      
@@ -106,14 +224,36 @@ enum Relationship{
     COACH
 }
 
-type Event{
-    id: ID!
-    created: DateTime!
-    updated: DateTime  
-    
-
+enum Difficulty{
+    ABSOLUTE_BEGINNER
+    BEGINNER 
+    INTERMEDIATE
+    CONFIRMED
+    ATHLETE 
 }
 
+enum SocialProvider{
+    FACEBOOK
+    TWITTER
+    GOOGLE
+    NONE
+}
 
+enum ReactionType{
+    LIKE
+    WARNING
+    FORZA    
+    IMPRESSED    
+}
 
+enum ExerciceCategory{
+    CARDIO
+    HIIT
+    CROSSFIT
+    YOGA
+    FITNESS
+    BODYBUILDING
+    STRETCH
+    OTHER
+}
 
