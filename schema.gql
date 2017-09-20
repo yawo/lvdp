@@ -1,259 +1,284 @@
-# projectId: cj5e1b391z7270122e6r1j80c
-# version: 5
-# scalar DateTime
+    # projectId: cj5e1b391z7270122e6r1j80c
+    # version: 5
+    # scalar DateTime
 
 
 
-type File implements Node {
-  contentType: String!
-  createdAt: DateTime!
-  id: ID! @isUnique
-  name: String!
-  secret: String! @isUnique
-  size: Int!
-  updatedAt: DateTime!
-  url: String! @isUnique
-}
-
-type Node implements Node {
-  createdAt: DateTime!
-  id: ID! @isUnique
-  updatedAt: DateTime!
-}
-
-interface Node {
-    id: ID! @isUnique
+    type File implements Node {
+    contentType: String!
     createdAt: DateTime!
-    updatedAt: DateTime!
-}
-
-type User implements Node {
     id: ID! @isUnique
-    createdAt: DateTime!
+    name: String!
+    secret: String! @isUnique
+    size: Int!
     updatedAt: DateTime!
-    firstname: String
-    lastname: String
-    pseudo: String
-    age: Int
-    gender: Gender
-    email: String
-    phone: String
-    location: Address
-    addresses: [Address] @relation(name:"")
-    reputationScore: Int
-    albums: [Album] @relation(name:"")
-    profileMedia: Media  @relation(name:"")
-    roles: [UserRole] @relation(name:"")    
-    profiles: [SocialProfile] @relation(name:"")
-}
+    url: String! @isUnique
+    }
 
-type Album implements Node {
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    medias: [Media] @relation(name:"")
-}
-
-type SocialProfile implements Node {
+    type Node implements Node {
     createdAt: DateTime!
     id: ID! @isUnique
     updatedAt: DateTime!
-    provider: SocialProvider @relation(name:"")
-    username: String!    
-    password: String
-}
+    }
 
-type Address implements Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!
-    latlon: [Float]
-    full: String
-    street: String
-    postalCode: String
-    town: String
-    state: String
-    country: String   
-}
+    interface Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+    }
 
-type MemberWorkoutSession implements Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!
-    member: User @relation(name:"")
-    messages: [WorkoutChatMessage]    @relation(name:"") 
-    sets: [SessionSet]  @relation(name:"")
-    showOnBoard: Boolean
-    approvedOnBoard: Boolean
-    approvalMessage: String
-    streamUrl: String  
-    reactions: [Reaction] @relation(name:"")
+    type User implements Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        firstname: String
+        lastname: String
+        pseudo: String
+        age: Int
+        gender: Gender
+        email: String
+        phone: String        
+        addresses: [Address] @relation(name:"userToAdress")
+        reputationScore: Int
+        albums: [Album] @relation(name:"userToAlbum")
+        profileMedia: Media  @relation(name:"userToMedia")
+        roles: [UserRole]     
+        profiles: [SocialProfile] @relation(name:"userToProfile")
+        sessions: [WorkoutSession] @relation(name:"sessionToUser")
+        coachedWorkouts: [Workout] @relation(name:"workoutcoachToUser")
+        createdSets: [Set] @relation(name:"setToUser")
+        createdExercices: [Exercice]  @relation(name:"exerciceToUser")
+        ledTeams: [Team] @relation(name:"teamleadToUser")
+        teams: [Team] @relation(name:"teamToUser")
+        relatedTo: [Relationship] @relation(name:"relationshipToToUser")
+        relatedFrom: [Relationship] @relation(name:"relationshipFromToUser")
+        reactions: [Reaction] @relation(name:"reactionToUser")
+    }
 
-}
+    type Album implements Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        medias: [Media] @relation(name:"albumToMedia")
+        ownerUser: User @relation(name:"userToAlbum")
+        ownerTeam: Team @relation(name:"teamToAlbum")
+    }
 
+    type SocialProfile implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        provider: SocialProvider 
+        username: String!    
+        password: String
+        user: User @relation(name:"userToProfile")
+    }
 
-type Reaction implements Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!
-    user: User @relation(name:"")
-    reaction: ReactionType @relation(name:"")
-}
+    type Address implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        latlon: [Float]
+        full: String
+        street: String
+        postalCode: String
+        town: String
+        state: String
+        country: String   
+        ownerUser: User @relation(name:"userToAdress")
+        ownerTeam: Team @relation(name:"teamToAdress")
+        workouts: [Workout] @relation(name:"workoutToAddress")
+    }
 
-type SessionSet implements  Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!    
-    exercice: Exercice @relation(name:"")
-    startDate: DateTime!
-    endDate: DateTime
-    repetition: Int        
-    showOnBoard: Boolean!
-}
+    type WorkoutSession implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        member: User @relation(name:"sessionToUser")
+        messages: [WorkoutChatMessage]  @relation(name:"sessionToMessage") 
+        sets: [SessionSet]  @relation(name:"sessionToSet")
+        showOnBoard: Boolean
+        approvedOnBoard: Boolean
+        approvalMessage: String
+        streamUrl: String  
+        reactions: [Reaction] @relation(name:"sessionToReaction")
+        workout: Workout @relation(name:"workoutToSessions")
 
-
-
-type WorkoutChatMessage implements Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!    
-    content: String
-}
-
-
-type Workout implements Node {
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    name: String
-    description: String
-    mainCoach: User @relation(name:"")
-    coachs: [User] @relation(name:"")
-    startDate: DateTime
-    endDate: DateTime
-    schedule: [Set] @relation(name:"")
-    location: Address    
-    isPublic: Boolean
-    memberSessions: [MemberWorkoutSession] @relation(name:"")
-    streamUrl: String     
-}
-
-
-
-type Set implements Node{
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    createdBy: User @relation(name:"")
-    exercice: Exercice @relation(name:"")
-    directives: [SetDirective] @relation(name:"")   
-}
-
-type SetDirective implements Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!
-    difficulty: Difficulty
-    repetition: Int 
-    postRest: Int 
-}
-
-type Exercice implements Node {
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    createdBy: User @relation(name:"")
-    name: String
-    description: String
-    medias: [Media] @relation(name:"")
-    categories: [ExerciceCategory]
-    tags: [String]
-}
+    }
 
 
-type Media implements Node{
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    ownerid: String
-    mime: String
-    name: String
-    url: [String]
-}
- 
-type Team implements Node{
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    name: String
-    description: String
-    lead: User @relation(name:"")
-    members: [User] @relation(name:"")
-    albums: [Album] @relation(name:"")
-    profileMedia: Media  @relation(name:"")
-}
+    type Reaction implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        user: User @relation(name:"reactionToUser")
+        reaction: ReactionType 
+        session: WorkoutSession @relation(name:"sessionToReaction")
+    }
 
-type Relation implements Node {
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!    
-    from: User @relation(name:"")
-    to: User @relation(name:"")
-    kind: Relationship @relation(name:"")
-}
+    type SessionSet implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!    
+        exercice: Exercice @relation(name:"sessionToExercice")
+        startDate: DateTime!
+        endDate: DateTime
+        repetition: Int        
+        showOnBoard: Boolean!
+        session: WorkoutSession @relation(name:"sessionToSet")
+    }
 
-type Event implements Node {
-    id: ID! @isUnique
-    createdAt: DateTime!
-    updatedAt: DateTime!  
-}
 
-enum Gender {
-    MALE
-    FEMALE
-}
 
-enum UserRole {
-    ATHLETE
-    CERTIFIED_COACH
-    ADMIN      
-}
+    type WorkoutChatMessage implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!    
+        content: String
+        session: WorkoutSession @relation(name:"sessionToMessage")
+    }
 
-enum Relationship{
-    FOLLOW
-    COACH
-}
 
-enum Difficulty{
-    ABSOLUTE_BEGINNER
-    BEGINNER 
-    INTERMEDIATE
-    CONFIRMED
-    ATHLETE 
-}
+    type Workout implements Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        name: String
+        description: String    
+        coachs: [User] @relation(name:"workoutcoachToUser")
+        startDate: DateTime
+        endDate: DateTime
+        setSchedule: [Set] @relation(name:"workoutToSet")
+        location: Address  @relation(name:"workoutToAddress")  
+        isPublic: Boolean
+        sessions: [WorkoutSession] @relation(name:"workoutToSessions")
+        streamUrl: String     
+    }
 
-enum SocialProvider{
-    FACEBOOK
-    TWITTER
-    GOOGLE
-    NONE
-}
 
-enum ReactionType{
-    LIKE
-    WARNING
-    FORZA    
-    IMPRESSED    
-}
 
-enum ExerciceCategory{
-    CARDIO
-    HIIT
-    CROSSFIT
-    YOGA
-    FITNESS
-    BODYBUILDING
-    STRETCH
-    OTHER
-}
+    type Set implements Node{
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        createdBy: User @relation(name:"setToUser")
+        exercice: Exercice @relation(name:"setToExercice")
+        directives: [SetDirective] @relation(name:"setToDirective")  
+        workouts: [Workout]  @relation(name:"workoutToSet") 
+    }
+
+    type SetDirective implements Node {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        difficulty: Difficulty
+        repetition: Int 
+        postRest: Int 
+        set: Set  @relation(name:"setToDirective")  
+    }
+
+    type Exercice implements Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        createdBy: User @relation(name:"exerciceToUser")
+        name: String
+        description: String
+        medias: [Media] @relation(name:"exerciceToMedia")
+        categories: [ExerciceCategory]
+        tags: [String]
+        sets: [Set] @relation(name:"setToExercice")
+        sessionSets: [SessionSet]  @relation(name:"sessionToExercice")
+    }
+
+
+    type Media implements Node{
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        ownerUser: User @relation(name:"userToMedia")
+        ownerTeam: Team   @relation(name:"teamToMedia")
+        mime: String
+        name: String
+        url: [String]
+        album: Album @relation(name:"albumToMedia")
+        exercices: [Exercice] @relation(name:"exerciceToMedia")
+    }
+    
+    type Team implements Node{
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        name: String
+        description: String
+        lead: User @relation(name:"teamleadToUser")
+        members: [User] @relation(name:"teamToUser")
+        albums: [Album] @relation(name:"teamToAlbum")
+        profileMedia: Media  @relation(name:"teamToMedia")
+        adresses: [Address] @relation(name:"teamToAdress")
+    }
+
+    type Relationship implements Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!    
+        from: User @relation(name:"relationshipFromToUser")
+        to: User  @relation(name:"relationshipToToUser")
+        kind: RelationshipKind
+    }
+
+    type Event implements Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!  
+    }
+
+    enum Gender {
+        MALE
+        FEMALE
+    }
+
+    enum UserRole {
+        ATHLETE
+        CERTIFIED_COACH
+        ADMIN      
+    }
+
+    enum RelationshipKind{
+        FOLLOW
+        COACH
+    }
+
+    enum Difficulty{
+        ABSOLUTE_BEGINNER
+        BEGINNER 
+        INTERMEDIATE
+        CONFIRMED
+        ATHLETE 
+    }
+
+    enum SocialProvider{
+        FACEBOOK
+        TWITTER
+        GOOGLE
+        NONE
+    }
+
+    enum ReactionType{
+        LIKE
+        WARNING
+        FORZA    
+        IMPRESSED    
+    }
+
+    enum ExerciceCategory{
+        CARDIO
+        HIIT
+        CROSSFIT
+        YOGA
+        FITNESS
+        BODYBUILDING
+        STRETCH
+        OTHER
+    }
 
