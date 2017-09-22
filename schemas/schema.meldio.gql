@@ -1,0 +1,282 @@
+    # projectId: cj5e1b391z7270122e6r1j80c
+    # version: 5
+    scalar DateTime
+
+
+
+    type File implements Node @rootConnection(field: "allFiles") {
+		contentType: String!
+		createdAt: DateTime!
+		id: ID! @isUnique
+		name: String!
+		secret: String! @isUnique
+		size: Int!
+		updatedAt: DateTime!
+		url: String! @isUnique
+    }
+
+
+    interface Node {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+    }
+
+    type User implements Node @rootConnection(field: "allUsers") {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        firstname: String
+        lastname: String
+        pseudo: String
+        age: Int
+        gender: Gender
+        email: String
+        phone: String        
+        addresses: NodeConnection(Address,ownerUser)
+        reputationScore: Int
+        albums: NodeConnection(Album,ownerUser)
+        profileMedia: NodeConnection(Media,ownerUser)
+        roles: [UserRole!]     
+        profiles: NodeConnection(SocialProfile,user)
+        sessions: NodeConnection(WorkoutSession,member)
+        coachedWorkouts: NodeConnection(Workout,coachs)
+        createdSets: NodeConnection(Set,createdBy)
+        createdExercices: NodeConnection(Exercice,createdBy)
+        ledTeams: NodeConnection(Team,lead)
+        teams: NodeConnection(Team,members)
+        relatedTo: NodeConnection(Relationship,to)
+        relatedFrom: NodeConnection(Relationship,from)
+        reactions: NodeConnection(Reaction,user)
+    }
+
+    type Album implements Node @rootConnection(field: "allAlbums") {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        medias: NodeConnection(Media,AlbumToMedia)
+        ownerUser: NodeConnection(User,albums)
+        ownerTeam: NodeConnection(Team,TeamToAlbum)
+    }
+
+    type SocialProfile implements Node @rootConnection(field: "allSocialProfiles") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        provider: SocialProvider 
+        username: String!    
+        password: String
+        user: NodeConnection(User,profiles)
+    }
+
+    type Address implements Node @rootConnection(field: "allAddresss") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        latlon: [Float!]
+        full: String
+        street: String
+        postalCode: String
+        town: String
+        state: String
+        country: String   
+        ownerUser: NodeConnection(User,addresses)
+        ownerTeam: NodeConnection(Team,TeamToAdress)
+        workouts: NodeConnection(Workout,WorkoutToAddress)
+    }
+
+    type WorkoutSession implements Node @rootConnection(field: "allWorkoutSessions") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        member: NodeConnection(User,sessions)
+        messages: NodeConnection(WorkoutChatMessage,SessionToMessage) 
+        sets: NodeConnection(SessionSet,SessionToSet)
+        showOnBoard: Boolean
+        approvedOnBoard: Boolean
+        approvalMessage: String
+        streamUrl: String  
+        reactions: NodeConnection(Reaction,SessionToReaction)
+        workout: NodeConnection(Workout,WorkoutToSessions)
+
+    }
+
+
+    type Reaction implements Node @rootConnection(field: "allReactions") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        user: NodeConnection(User,reactions)
+        reaction: ReactionType 
+        session: NodeConnection(WorkoutSession,SessionToReaction)
+    }
+
+    type SessionSet implements Node @rootConnection(field: "allSessionSets") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!    
+        exercice: NodeConnection(Exercice,SessionToExercice)
+        startDate: DateTime!
+        endDate: DateTime
+        repetition: Int        
+        showOnBoard: Boolean!
+        session: NodeConnection(WorkoutSession,SessionToSet)
+    }
+
+
+
+    type WorkoutChatMessage implements Node @rootConnection(field: "allWorkoutChatMessages") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!    
+        content: String
+        session: NodeConnection(WorkoutSession,SessionToMessage)
+    }
+
+
+    type Workout implements Node @rootConnection(field: "allWorkouts") {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        name: String
+        description: String    
+        coachs: NodeConnection(User,coachedWorkouts)
+        startDate: DateTime
+        endDate: DateTime
+        setSchedule: NodeConnection(Set,WorkoutToSet)
+        location: NodeConnection(Address,WorkoutToAddress)  
+        isPublic: Boolean
+        sessions: NodeConnection(WorkoutSession,WorkoutToSessions)
+        streamUrl: String     
+    }
+
+
+
+    type Set implements Node @rootConnection(field: "allSets"){
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        createdBy: NodeConnection(User,createdSets)
+        exercice: NodeConnection(Exercice,SetToExercice)
+        directives: NodeConnection(SetDirective,SetToDirective)  
+        workouts: NodeConnection(Workout,WorkoutToSet) 
+    }
+
+    type SetDirective implements Node @rootConnection(field: "allSetDirectives") {
+        createdAt: DateTime!
+        id: ID! @isUnique
+        updatedAt: DateTime!
+        difficulty: Difficulty
+        repetition: Int 
+        postRest: Int 
+        set: NodeConnection(Set,SetToDirective)  
+    }
+
+    type Exercice implements Node @rootConnection(field: "allExercices") {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        createdBy: NodeConnection(User,createdExercices)
+        name: String
+        description: String
+        medias: NodeConnection(Media,ExerciceToMedia)
+        categories: [ExerciceCategory!]
+        tags: [String!]
+        sets: NodeConnection(Set,SetToExercice)
+        sessionSets: NodeConnection(SessionSet,SessionToExercice)
+    }
+
+
+    type Media implements Node @rootConnection(field: "allMedias"){
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        ownerUser: NodeConnection(User,profileMedia)
+        ownerTeam: NodeConnection(Team,TeamToMedia)
+        mime: String
+        name: String
+        url: [String!]
+        album: NodeConnection(Album,AlbumToMedia)
+        exercices: NodeConnection(Exercice,ExerciceToMedia)
+    }
+    
+    type Team implements Node @rootConnection(field: "allTeams"){
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        name: String
+        description: String
+        lead: NodeConnection(User,ledTeams)
+        members: NodeConnection(User,teams)
+        albums: NodeConnection(Album,TeamToAlbum)
+        profileMedia: NodeConnection(Media,TeamToMedia)
+        adresses: NodeConnection(Address,TeamToAdress)
+    }
+
+    type Relationship implements Node @rootConnection(field: "allRelationships") {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!    
+        from: NodeConnection(User,relatedFrom)
+        to: NodeConnection(User,relatedTo)
+        kind: RelationshipKind
+    }
+
+    type Event implements Node @rootConnection(field: "allEvents") {
+        id: ID! @isUnique
+        createdAt: DateTime!
+        updatedAt: DateTime!  
+    }
+
+    enum Gender {
+        MALE
+        FEMALE
+    }
+
+    enum UserRole {
+        ATHLETE
+        CERTIFIED_COACH
+        ADMIN      
+    }
+
+    enum RelationshipKind{
+        FOLLOW
+        COACH
+        REVIEWER
+    }
+
+    enum Difficulty{
+        ABSOLUTE_BEGINNER
+        BEGINNER 
+        INTERMEDIATE
+        CONFIRMED
+        ATHLETE 
+    }
+
+    enum SocialProvider{
+        FACEBOOK
+        TWITTER
+        GOOGLE
+        NONE
+    }
+
+    enum ReactionType{
+        SHAME
+        COURAGE
+        LIKE
+        WARNING
+        FORZA    
+        IMPRESSED    
+    }
+
+    enum ExerciceCategory{
+        CARDIO
+        HIIT
+        CROSSFIT
+        YOGA
+        FITNESS
+        BODYBUILDING
+        STRETCH
+        OTHER
+    }
+

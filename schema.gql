@@ -1,7 +1,12 @@
     # projectId: cj5e1b391z7270122e6r1j80c
     # version: 5
-    # scalar DateTime
+     scalar DateTime
 
+    interface Node {
+            id: ID! @isUnique
+            createdAt: DateTime!
+            updatedAt: DateTime!
+        }
 
 
     type File implements Node {
@@ -15,18 +20,9 @@
 		url: String! @isUnique
     }
 
-    type Node implements Node {
-    createdAt: DateTime!
-    id: ID! @isUnique
-    updatedAt: DateTime!
-    }
+   
 
-    interface Node {
-        id: ID! @isUnique
-        createdAt: DateTime!
-        updatedAt: DateTime!
-    }
-
+    
     type User implements Node {
         id: ID! @isUnique
         createdAt: DateTime!
